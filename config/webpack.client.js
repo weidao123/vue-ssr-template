@@ -4,6 +4,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ClientSSRPlugin = require("vue-server-renderer/client-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(BaseConfig, {
     entry: "./entry/client-entry.js",
@@ -12,7 +14,29 @@ module.exports = merge(BaseConfig, {
         port: 8080,
         hot: true
     },
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                sourceMap: true,
+                parallel: true,
+                cache: true
+            }),
+        ],
+        splitChunks: {
+            name: 'vendor',
+            minSize: 1024 * 100,
+            maxSize: 1024 * 100,
+            minChunks: 1
+        }
+    },
+    module: {
+        rules: []
+    },
     plugins: [
+        new MiniCssPlugin({
+            filename: "css/[name].[hash].js",
+            chunkFilename: 'css/[id].[name].[hash].css'
+        }),
         new HtmlWebpackPlugin({
             template: "index.html",
             filename: "index.html",

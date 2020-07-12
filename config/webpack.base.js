@@ -1,20 +1,13 @@
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const webpack = require("webpack");
 const path = require("path");
+const MiniCssPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
     performance: {
         maxEntrypointSize: 1024 * 1000,
         maxAssetSize: 1024 * 1000
-    },
-    optimization: {
-        splitChunks: {
-            name: 'vendor',
-            minSize: 1024 * 100,
-            maxSize: 1024 * 100,
-            minChunks: 1
-        }
     },
     output: {
         path: path.join(__dirname, "../dist"),
@@ -24,7 +17,11 @@ module.exports = {
     module: {
         rules: [{
             test: /\.vue$/,
-            use: "vue-loader"
+            loader: "vue-loader"
+        }, {
+            test: /\.css$/,
+            loader: ["style-loader", "css-loader"],
+            exclude: /node_modules/
         }]
     },
     devtool: "eval-source-map",
