@@ -10,9 +10,9 @@ module.exports = merge(BaseConfig, {
     output: {
         libraryTarget: "commonjs2"
     },
-    externals: [ new WebpackNodeExternals({
-        whitelist: /\.css$/
-    }) ],
+    externals: [new WebpackNodeExternals({
+        allowlist: [/\.css$/]
+    })],
     plugins: [
         new ServerSSRPlugin()
     ]

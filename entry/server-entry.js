@@ -8,6 +8,6 @@ export default function ({ url }) {
     const { app, router } = VueAppFactory();
     router.push(url);
     const components = router.getMatchedComponents();
-    console.log(components.length);
+    console.log("router matched :" + components.length);
     return app;
 }

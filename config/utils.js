@@ -79,10 +79,12 @@ function getBundle () {
     return {
         serverBundle: BundleCache[SERVER_BUNDLE_NAME],
         template: BundleCache[TEMPLATE_PATH],
-        clientBundle: BundleCache[CLIENT_BUNDLE_NAME]
+        clientBundle: BundleCache[CLIENT_BUNDLE_NAME],
     }
 }
-
+exports.TEMPLATE_PATH = TEMPLATE_PATH;
+exports.SERVER_BUNDLE_NAME = SERVER_BUNDLE_NAME;
+exports.CLIENT_BUNDLE_NAME = CLIENT_BUNDLE_NAME;
 exports.getBundle = getBundle;
 exports.initClientServer = initClientServer;
 exports.createBundle = createBundle;
