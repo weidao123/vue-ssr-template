@@ -69,10 +69,11 @@ async function initClientServer(Server, mode = "development") {
     const ServerCompiler = Webpack(ServerConf);
     Server.use(WebpackDevMiddleware(ClientCompiler));
     const {data} = await get("http://localhost:"+ SERVER_PORT +"/" + CLIENT_BUNDLE_NAME);
+    const res = await get("http://localhost:"+ SERVER_PORT +"/" + "index.html");
     BundleCache[CLIENT_BUNDLE_NAME] = data;
     const jsonStr = await createBundle(ServerCompiler, SERVER_BUNDLE_NAME);
     BundleCache[SERVER_BUNDLE_NAME] = JSON.parse(jsonStr);
-    BundleCache[TEMPLATE_PATH] = fs.readFileSync(TEMPLATE_PATH, "utf-8");
+    BundleCache[TEMPLATE_PATH] = res.data;
 }
 
 function getBundle () {

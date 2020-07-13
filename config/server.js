@@ -25,7 +25,7 @@ const Server = express();
                 clientManifest: clientBundle,
                 template,
                 runInNewContext: false,
-                inject: ENV === "development"
+                inject: false
             });
             const html = await renderer.renderToString({url: req.url});
             res.end(html);

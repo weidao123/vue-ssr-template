@@ -1,6 +1,5 @@
 const BaseConfig = require("./webpack.base");
 const { merge } = require("webpack-merge");
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ClientSSRPlugin = require("vue-server-renderer/client-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
@@ -9,10 +8,17 @@ const MiniCssPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(BaseConfig, {
     entry: "./entry/client-entry.js",
+    output: {
+        filename: "js/[name].[hash].js",
+    },
     devServer: {
         contentBase: "dist",
         port: 8080,
         hot: true
+    },
+    performance: {
+        maxEntrypointSize: 1024 * 1000,
+        maxAssetSize: 1024 * 1000
     },
     optimization: {
         minimizer: [
@@ -30,7 +36,11 @@ module.exports = merge(BaseConfig, {
         }
     },
     module: {
-        rules: []
+        rules: [{
+            test: /\.css$/,
+            loader: [MiniCssPlugin.loader, "css-loader"],
+            exclude: /node_modules/
+        }]
     },
     plugins: [
         new MiniCssPlugin({

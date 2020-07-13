@@ -17,5 +17,6 @@
 <style scoped>
 .title {
     color: red;
+    font-size: 18px;
 }
 </style>
