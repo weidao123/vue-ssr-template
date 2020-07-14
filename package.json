@@ -8,8 +8,8 @@
     "build:client": "webpack --mode=production --config config/webpack.client.js",
     "build:server": "webpack --mode=production --config config/webpack.server.js",
     "build": "npm run build:client && npm run build:server",
-    "dev": "node config/server.js ENV=development",
-    "prod": "node config/server.js ENV=production"
+    "dev": "npm run client && node config/dev.server.js ENV=development",
+    "prod": "node config/prod.server.js ENV=production"
   },
   "dependencies": {
     "axios": "^0.19.2",

@@ -16,7 +16,7 @@
 
 <style scoped>
 .title {
-    color: red;
-    font-size: 18px;
+    color: blue;
+    background-color: green;
 }
 </style>

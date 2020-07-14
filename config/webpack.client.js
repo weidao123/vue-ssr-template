@@ -9,12 +9,14 @@ const MiniCssPlugin = require("mini-css-extract-plugin");
 module.exports = merge(BaseConfig, {
     entry: "./entry/client-entry.js",
     output: {
-        filename: "js/[name].[hash].js",
+        publicPath: "http://localhost:8080/",
+        filename: "js/[hash].js",
     },
     devServer: {
         contentBase: "dist",
         port: 8080,
-        hot: true
+        hot: true,
+        headers: {'Access-Control-Allow-Origin': '*'}
     },
     performance: {
         maxEntrypointSize: 1024 * 1000,
@@ -28,17 +30,17 @@ module.exports = merge(BaseConfig, {
                 cache: true
             }),
         ],
-        splitChunks: {
-            name: 'vendor',
-            minSize: 1024 * 100,
-            maxSize: 1024 * 100,
-            minChunks: 1
-        }
+        // splitChunks: {
+        //     name: 'vendor',
+        //     minSize: 1024 * 100,
+        //     maxSize: 1024 * 100,
+        //     minChunks: 1
+        // }
     },
     module: {
         rules: [{
             test: /\.css$/,
-            loader: [MiniCssPlugin.loader, "css-loader"],
+            loader: ["vue-style-loader", "css-loader"],
             exclude: /node_modules/
         }]
     },

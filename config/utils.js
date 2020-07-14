@@ -12,15 +12,16 @@ const SERVER_BUNDLE_NAME = "vue-ssr-server-bundle.json";
 const CLIENT_BUNDLE_NAME = "vue-ssr-client-manifest.json";
 const TEMPLATE_PATH = path.join(__dirname, "../index.html");
 const BundleCache = {};
-const SERVER_PORT = ClientConf.devServer && ClientConf.devServer.port || 8088;
+const SERVER_PORT = 8088;
 exports.SERVER_PORT = SERVER_PORT;
 
 /**
  * 从内存获取 bundle
  * @param compiler
  * @param name
+ * @param callback
  */
-function createBundle(compiler, name) {
+function createBundle(compiler, name, callback) {
     return new Promise(function (resolve, reject) {
         const mf = new MemoryFs();
         compiler.outputFileSystem = mf;
@@ -37,7 +38,8 @@ function createBundle(compiler, name) {
                 name
             );
             const bundle = mf.readFileSync(serverBundlePath, "utf-8");
-            resolve(bundle);
+            resolve(JSON.parse(bundle));
+            callback && callback(JSON.parse(bundle));
         });
     })
 }
@@ -68,12 +70,12 @@ async function initClientServer(Server, mode = "development") {
     const ClientCompiler = Webpack(ClientConf);
     const ServerCompiler = Webpack(ServerConf);
     Server.use(WebpackDevMiddleware(ClientCompiler));
+    BundleCache[TEMPLATE_PATH] = fs.readFileSync(path.join(__dirname, "../index.html"), "utf-8");
+
     const {data} = await get("http://localhost:"+ SERVER_PORT +"/" + CLIENT_BUNDLE_NAME);
-    const res = await get("http://localhost:"+ SERVER_PORT +"/" + "index.html");
     BundleCache[CLIENT_BUNDLE_NAME] = data;
-    const jsonStr = await createBundle(ServerCompiler, SERVER_BUNDLE_NAME);
-    BundleCache[SERVER_BUNDLE_NAME] = JSON.parse(jsonStr);
-    BundleCache[TEMPLATE_PATH] = res.data;
+    const serverBundle = await createBundle(ServerCompiler, SERVER_BUNDLE_NAME);
+    BundleCache[SERVER_BUNDLE_NAME] = serverBundle;
 }
 
 function getBundle () {
@@ -83,6 +85,7 @@ function getBundle () {
         clientBundle: BundleCache[CLIENT_BUNDLE_NAME],
     }
 }
+
 exports.TEMPLATE_PATH = TEMPLATE_PATH;
 exports.SERVER_BUNDLE_NAME = SERVER_BUNDLE_NAME;
 exports.CLIENT_BUNDLE_NAME = CLIENT_BUNDLE_NAME;

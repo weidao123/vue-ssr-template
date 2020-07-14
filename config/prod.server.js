@@ -1,17 +1,20 @@
 const express = require("express");
 const ServerRender = require("vue-server-renderer");
-const {getBundle, initClientServer, SERVER_PORT, CLIENT_BUNDLE_NAME} = require("./utils");
-const Server = express();
+const {getBundle, initClientServer, SERVER_PORT } = require("./utils");
+const ProdServer = express();
 
 /**
  * 启动Express服务器
  */
 (async function () {
     const ENV = process.argv[2].split("=")[1];
-    Server.listen(SERVER_PORT, () => console.log("> start server"));
-    Server.get("*", async function (req, res, next) {
-
-        const {serverBundle, clientBundle, template} = getBundle();
+    ProdServer.listen(SERVER_PORT, () => {
+        console.log("> start server\r\n");
+        console.log("> running at " + ENV + "env\r\n");
+        console.log("> application running here http://localhost:" + SERVER_PORT);
+    });
+    ProdServer.get("*", async function (req, res, next) {
+        const {serverBundle, clientBundle, template} = await getBundle();
         if (!clientBundle
             || clientBundle.all.includes(req.url.substring(1))
             || clientBundle.all.includes(req.url)
@@ -25,7 +28,7 @@ const Server = express();
                 clientManifest: clientBundle,
                 template,
                 runInNewContext: false,
-                inject: false
+                inject: ENV === "development"
             });
             const html = await renderer.renderToString({url: req.url});
             res.end(html);
@@ -35,5 +38,5 @@ const Server = express();
             res.send(e.toString());
         }
     });
-    await initClientServer(Server, ENV);
+    await initClientServer(ProdServer, ENV);
 })();
