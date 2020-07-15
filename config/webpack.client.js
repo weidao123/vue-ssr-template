@@ -5,6 +5,9 @@ const ClientSSRPlugin = require("vue-server-renderer/client-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssPlugin = require("mini-css-extract-plugin");
+const OptimizerCss = require("optimize-css-assets-webpack-plugin");
+
+const isDev = process.env.NODE_ENV === "development";
 
 module.exports = merge(BaseConfig, {
     entry: "./entry/client-entry.js",
@@ -24,23 +27,37 @@ module.exports = merge(BaseConfig, {
     },
     optimization: {
         minimizer: [
+            new OptimizerCss(),
             new UglifyJSPlugin({
                 sourceMap: true,
                 parallel: true,
                 cache: true
             }),
         ],
-        // splitChunks: {
-        //     name: 'vendor',
-        //     minSize: 1024 * 100,
-        //     maxSize: 1024 * 100,
-        //     minChunks: 1
-        // }
+        splitChunks: {
+            name: 'vendor',
+            minSize: 1024 * 100,
+            maxSize: 1024 * 100,
+            minChunks: 1
+        }
     },
     module: {
         rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: ['@babel/preset-env'],
+                    plugins: [[
+                        '@babel/plugin-transform-runtime',
+                        { 'corejs': 3 }
+                    ]]
+                }
+            }
+        }, {
             test: /\.css$/,
-            loader: ["vue-style-loader", "css-loader"],
+            loader: [isDev ? MiniCssPlugin.loader : MiniCssPlugin.loader, "css-loader", "postcss-loader"],
             exclude: /node_modules/
         }]
     },
