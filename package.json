@@ -8,11 +8,12 @@
     "build:client": "cross-env NODE_ENV=production webpack --mode=production --config config/webpack.client.js",
     "build:server": " cross-env NODE_ENV=production webpack --mode=production --config config/webpack.server.js",
     "build": "npm run build:client && npm run build:server",
-    "dev": "npm run client && node config/dev.server.js ENV=development",
+    "dev": "concurrently  \"npm run client\" \"node config/dev.server.js ENV=development\"",
     "prod": "node config/prod.server.js ENV=production"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "memory-fs": "^0.5.0",

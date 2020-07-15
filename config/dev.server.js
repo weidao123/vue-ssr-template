@@ -8,7 +8,6 @@ const webpack = require("webpack");
 const {get} = require("axios");
 const fs = require("fs");
 const path = require("path");
-
 /**
  * 开发环境 服务
  */
@@ -55,3 +54,4 @@ const path = require("path");
         }
     });
 })();
+console.log("urnnning ==============>");

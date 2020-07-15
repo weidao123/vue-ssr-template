@@ -12,6 +12,17 @@ module.exports = {
         rules: [{
             test: /\.vue$/,
             loader: "vue-loader"
+        },  {
+            test: /\.(jpg|png|gif|jpeg)$/,
+            use: {
+                loader: "url-loader",
+                options: {
+                    esModule: false,
+                    limit: 1024 * 10,
+                    outputPath: 'images',
+                    name: '[name].[hash:8].[ext]'
+                }
+            }
         }]
     },
     devtool: "eval-source-map",

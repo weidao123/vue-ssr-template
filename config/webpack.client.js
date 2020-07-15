@@ -27,12 +27,13 @@ module.exports = merge(BaseConfig, {
     },
     optimization: {
         minimizer: [
-            new OptimizerCss(),
             new UglifyJSPlugin({
                 sourceMap: true,
                 parallel: true,
-                cache: true
+                cache: true,
+                exclude: /node_modules/
             }),
+            new OptimizerCss(),
         ],
         splitChunks: {
             name: 'vendor',
@@ -63,7 +64,7 @@ module.exports = merge(BaseConfig, {
     },
     plugins: [
         new MiniCssPlugin({
-            filename: "css/[name].[hash].js",
+            filename: "css/[name].[hash].css",
             chunkFilename: 'css/[id].[name].[hash].css'
         }),
         new HtmlWebpackPlugin({
