@@ -6,7 +6,7 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssPlugin = require("mini-css-extract-plugin");
 const OptimizerCss = require("optimize-css-assets-webpack-plugin");
-
+const path = require("path");
 const isDev = process.env.NODE_ENV === "development";
 
 module.exports = merge(BaseConfig, {
@@ -72,7 +72,9 @@ module.exports = merge(BaseConfig, {
             filename: "index.html",
             minify: {
                 removeComments: false
-            }
+            },
+            inject: "body",
+            favicon: path.join(__dirname, "../favicon.png")
         }),
         new CleanWebpackPlugin(),
         new ClientSSRPlugin()
