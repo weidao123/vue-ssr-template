@@ -19,11 +19,7 @@ module.exports = merge(BaseConfig, {
         allowlist: [/\.css$/]
     })],
     module: {
-        rules: [{
-            test: /\.css$/,
-            loader: ["vue-style-loader", "css-loader"],
-            exclude: /node_modules/
-        }]
+        rules: []
     },
     plugins: [
         new MiniCssPlugin(),

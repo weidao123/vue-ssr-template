@@ -14,7 +14,7 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .title {
     color: blue;
     background-color: green;

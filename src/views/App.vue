@@ -6,6 +6,10 @@
 
 <script>
     export default {
-
+        data() {
+            return {
+                msg: 'hello typescript'
+            }
+        },
     }
 </script>
