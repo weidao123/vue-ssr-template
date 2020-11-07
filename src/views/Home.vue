@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="title">Home Page</h1>
+        <h1 class="title">as Home Page</h1>
         <router-link to="/">To Index</router-link>
     </div>
 </template>

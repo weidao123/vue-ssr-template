@@ -6,13 +6,12 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssPlugin = require("mini-css-extract-plugin");
 const OptimizerCss = require("optimize-css-assets-webpack-plugin");
-const path = require("path");
 const isDev = process.env.NODE_ENV === "development";
 
 module.exports = merge(BaseConfig, {
     entry: "./entry/client-entry.js",
     output: {
-        publicPath: "http://localhost:8080/",
+        publicPath: "/",
         filename: "js/[hash].js",
     },
     devServer: {
@@ -74,7 +73,7 @@ module.exports = merge(BaseConfig, {
                 removeComments: false
             },
             inject: "body",
-            favicon: path.join(__dirname, "../favicon.png")
+            // favicon: path.join(__dirname, "../favicon.png")
         }),
         new CleanWebpackPlugin(),
         new ClientSSRPlugin()
