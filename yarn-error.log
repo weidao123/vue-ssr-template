@@ -1,29 +1,30 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn install
+  E:\node\node.exe E:\yarn\bin\yarn.js add reflect-meta
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/Users/tian/Libs/flutter/1.2.1/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/tian/WorkSpace/web/vue-ssr-template/node_modules/.bin:.:/Users/tian/Libs/apache-maven-3.6.3/bin
+  D:\project\vue-ssr-template\node_modules\.bin;E:\xshell\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;E:\JavaSDK\jdk\bin;E:\AndroidSDK\Android\Sdk;E:\deno;E:\node;E:\Git\bin;E:\FlutterSDK\1.7.8\flutter\bin;E:\yarn\bin\;E:\FlutterSDK\1.7.8\flutter\bin\cache\dart-sdk\bin;D:\chrome-driver;E:\python;C:\Users\qi.tian\AppData\Local\Microsoft\WindowsApps;;C:\Users\qi.tian\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\qi.tian\AppData\Local\Yarn\bin
 
 Yarn version: 
   1.22.4
 
 Node version: 
-  14.7.0
+  12.13.1
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141375:19)
-      at Object.onceWrapper (events.js:420:28)
-      at ClientRequest.emit (events.js:314:20)
-      at TLSSocket.emitRequestTimeout (_http_client.js:769:9)
-      at Object.onceWrapper (events.js:420:28)
-      at TLSSocket.emit (events.js:326:22)
-      at TLSSocket.Socket._onTimeout (net.js:483:8)
-      at listOnTimeout (internal/timers.js:551:17)
-      at processTimers (internal/timers.js:494:7)
+  Error: https://mirrors.tencent.com/npm/reflect-meta: no such package available
+      at Request.params.callback [as _callback] (E:\yarn\lib\cli.js:66096:18)
+      at Request.self.callback (E:\yarn\lib\cli.js:140748:22)
+      at Request.emit (events.js:210:5)
+      at Request.<anonymous> (E:\yarn\lib\cli.js:141720:10)
+      at Request.emit (events.js:210:5)
+      at IncomingMessage.<anonymous> (E:\yarn\lib\cli.js:141642:12)
+      at Object.onceWrapper (events.js:299:28)
+      at IncomingMessage.emit (events.js:215:7)
+      at endReadableNT (_stream_readable.js:1184:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
@@ -32,12 +33,13 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "client": "cross-env NODE_ENV=development webpack-dev-server --mode development --config config/webpack.client.js",
-      "build:client": "cross-env NODE_ENV=production webpack --mode=production --config config/webpack.client.js",
-      "build:server": " cross-env NODE_ENV=production webpack --mode=production --config config/webpack.server.js",
+      "test": "ts-node server/lib/Loader.ts",
+      "dev": "cross-env NODE_ENV=development  node server/app.js",
+      "start": "node server/app.js ENV=production",
       "build": "npm run build:client && npm run build:server",
-      "dev": "concurrently  \"npm run client\" \"node config/dev.server.js ENV=development\"",
-      "prod": "node config/prod.server.js ENV=production"
+      "client": "webpack-dev-server --mode development --config config/webpack.client.js",
+      "build:client": "cross-env NODE_ENV=production webpack --mode=production --config config/webpack.client.js",
+      "build:server": " cross-env NODE_ENV=production webpack --mode=production --config config/webpack.server.js"
     },
     "dependencies": {
       "axios": "^0.19.2",
@@ -60,6 +62,8 @@ npm manifest:
       "css-loader": "^3.6.0",
       "file-loader": "^6.0.0",
       "html-webpack-plugin": "^4.3.0",
+      "less": "^4.0.0",
+      "less-loader": "^7.1.0",
       "mini-css-extract-plugin": "^0.9.0",
       "optimize-css-assets-webpack-plugin": "^5.0.3",
       "postcss-loader": "^3.0.0",
@@ -913,6 +917,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
     integrity sha512-7+2BITlgjgDhH0vvwZU/HZJVyk+2XUlvxXe8dFMedNX/aMkaOq++rMAFXc0tM7ij15QaWlbdQASBR9dihi+bDQ==
   
+  "@types/json-schema@^7.0.6":
+    version "7.0.6"
+    resolved "https://mirrors.tencent.com/npm/@types%2fjson-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
+    integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
+  
   "@types/minimatch@*":
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -1160,10 +1169,25 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.5.1.tgz#b83ca89c5d42d69031f424cad49aada0236c6957"
     integrity sha512-KWcq3xN8fDjSB+IMoh2VaXVhRI0BBGxoYp3rx7Pkb6z0cFjYR9Q9l4yZqqals0/zsioCmocC5H6UvsGD4MoIBA==
   
+  ajv-keywords@^3.5.2:
+    version "3.5.2"
+    resolved "https://mirrors.tencent.com/npm/ajv-keywords/-/ajv-keywords-3.5.2.tgz#31f29da5ab6e00d1c2d329acf7b5929614d5014d"
+    integrity sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==
+  
   ajv@^6.1.0, ajv@^6.10.2, ajv@^6.12.2:
     version "6.12.3"
     resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.3.tgz#18c5af38a111ddeb4f2697bd78d68abc1cabd706"
     integrity sha512-4K0cK3L1hsqk9xIb2z9vs/XU+PGJZ9PNpJRDS9YLzmNdX6jmVPfamLvTJr0aDAusnHyCHO6MjzlkAsgtqp9teA==
+    dependencies:
+      fast-deep-equal "^3.1.1"
+      fast-json-stable-stringify "^2.0.0"
+      json-schema-traverse "^0.4.1"
+      uri-js "^4.2.2"
+  
+  ajv@^6.12.5:
+    version "6.12.6"
+    resolved "https://mirrors.tencent.com/npm/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
+    integrity sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==
     dependencies:
       fast-deep-equal "^3.1.1"
       fast-json-stable-stringify "^2.0.0"
@@ -1979,6 +2003,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
     integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
   
+  copy-anything@^2.0.1:
+    version "2.0.1"
+    resolved "https://mirrors.tencent.com/npm/copy-anything/-/copy-anything-2.0.1.tgz#2afbce6da684bdfcbec93752fa762819cb480d9a"
+    integrity sha512-lA57e7viQHOdPQcrytv5jFeudZZOXuyk47lZym279FiDQ8jeZomXiGuVf6ffMKkJ+3TIai3J1J3yi6M+/4U35g==
+    dependencies:
+      is-what "^3.7.1"
+  
   copy-concurrently@^1.0.0:
     version "1.0.5"
     resolved "https://registry.yarnpkg.com/copy-concurrently/-/copy-concurrently-1.0.5.tgz#92297398cae34937fcafd6ec8139c18051f0b5e0"
@@ -2575,6 +2606,13 @@ Lockfile:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
     integrity sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==
+  
+  errno@^0.1.1:
+    version "0.1.8"
+    resolved "https://mirrors.tencent.com/npm/errno/-/errno-0.1.8.tgz#8bb3e9c7d463be4976ff888f76b4809ebc2e811f"
+    integrity sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==
+    dependencies:
+      prr "~1.0.1"
   
   errno@^0.1.3, errno@~0.1.7:
     version "0.1.7"
@@ -3349,6 +3387,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
     integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
   
+  image-size@~0.5.0:
+    version "0.5.5"
+    resolved "https://mirrors.tencent.com/npm/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
+    integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
+  
   import-cwd@^2.0.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/import-cwd/-/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"
@@ -3689,6 +3732,11 @@ Lockfile:
     dependencies:
       has-symbols "^1.0.1"
   
+  is-what@^3.7.1:
+    version "3.12.0"
+    resolved "https://mirrors.tencent.com/npm/is-what/-/is-what-3.12.0.tgz#f4405ce4bd6dd420d3ced51a026fb90e03705e55"
+    integrity sha512-2ilQz5/f/o9V7WRWJQmpFYNmQFZ9iM+OXRonZKcYgTkCzjb949Vi4h282PD1UfmgHk666rcWonbRJ++KI41VGw==
+  
   is-windows@^1.0.1, is-windows@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
@@ -3802,6 +3850,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
     integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
   
+  klona@^2.0.4:
+    version "2.0.4"
+    resolved "https://mirrors.tencent.com/npm/klona/-/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
+    integrity sha512-ZRbnvdg/NxqzC7L9Uyqzf4psi1OM4Cuc+sJAkQPjO6XkQIJTNbfK2Rsmbw8fx1p2mkZdp2FZYo2+LwXYY/uwIA==
+  
   last-call-webpack-plugin@^3.0.0:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/last-call-webpack-plugin/-/last-call-webpack-plugin-3.0.0.tgz#9742df0e10e3cf46e5c0381c2de90d3a7a2d7555"
@@ -3809,6 +3862,32 @@ Lockfile:
     dependencies:
       lodash "^4.17.5"
       webpack-sources "^1.1.0"
+  
+  less-loader@^7.1.0:
+    version "7.1.0"
+    resolved "https://mirrors.tencent.com/npm/less-loader/-/less-loader-7.1.0.tgz#958d41e86d7de0bcb490711ee0f235aa9dc596aa"
+    integrity sha512-EHbnRaTzHgsxnd3RK6OXSiygcCJs72+2ezXVLg+Hgl/ijUTtthKZXZh4MvQkWJr3h/SSKvxGZr7IIHzuS2KbVQ==
+    dependencies:
+      klona "^2.0.4"
+      loader-utils "^2.0.0"
+      schema-utils "^3.0.0"
+  
+  less@^4.0.0:
+    version "4.0.0"
+    resolved "https://mirrors.tencent.com/npm/less/-/less-4.0.0.tgz#d238cc25576c1f722794dbca4ac82e5e3c7e9e65"
+    integrity sha512-av1eEa2D0xZfF7fjLJS/Dld7zAYSLU7EOEJvuOELeaNI3i6L/81AdjbK5/pytaRkBwi7ZEa0433IDvMLskKCOw==
+    dependencies:
+      copy-anything "^2.0.1"
+      parse-node-version "^1.0.1"
+      tslib "^1.10.0"
+    optionalDependencies:
+      errno "^0.1.1"
+      graceful-fs "^4.1.2"
+      image-size "~0.5.0"
+      make-dir "^2.1.0"
+      mime "^1.4.1"
+      native-request "^1.0.5"
+      source-map "~0.6.0"
   
   leven@^3.1.0:
     version "3.1.0"
@@ -3922,7 +4001,7 @@ Lockfile:
     dependencies:
       yallist "^3.0.2"
   
-  make-dir@^2.0.0:
+  make-dir@^2.0.0, make-dir@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
     integrity sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==
@@ -4046,7 +4125,7 @@ Lockfile:
     dependencies:
       mime-db "1.44.0"
   
-  mime@1.6.0:
+  mime@1.6.0, mime@^1.4.1:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
     integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
@@ -4180,6 +4259,11 @@ Lockfile:
       regex-not "^1.0.0"
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
+  
+  native-request@^1.0.5:
+    version "1.0.8"
+    resolved "https://mirrors.tencent.com/npm/native-request/-/native-request-1.0.8.tgz#8f66bf606e0f7ea27c0e5995eb2f5d03e33ae6fb"
+    integrity sha512-vU2JojJVelUGp6jRcLwToPoWGxSx23z/0iX+I77J3Ht17rf2INGjrhOoQnjVo60nQd8wVsgzKkPfRXBiVdD2ag==
   
   negotiator@0.6.2:
     version "0.6.2"
@@ -4506,6 +4590,11 @@ Lockfile:
     dependencies:
       error-ex "^1.3.1"
       json-parse-better-errors "^1.0.1"
+  
+  parse-node-version@^1.0.1:
+    version "1.0.1"
+    resolved "https://mirrors.tencent.com/npm/parse-node-version/-/parse-node-version-1.0.1.tgz#e2b5dbede00e7fa9bc363607f53327e8b073189b"
+    integrity sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==
   
   parse-passwd@^1.0.0:
     version "1.0.0"
@@ -5422,6 +5511,15 @@ Lockfile:
       "@types/json-schema" "^7.0.4"
       ajv "^6.12.2"
       ajv-keywords "^3.4.1"
+  
+  schema-utils@^3.0.0:
+    version "3.0.0"
+    resolved "https://mirrors.tencent.com/npm/schema-utils/-/schema-utils-3.0.0.tgz#67502f6aa2b66a2d4032b4279a2944978a0913ef"
+    integrity sha512-6D82/xSzO094ajanoOSbe4YvXWMfn2A//8Y1+MUqFAJul5Bs+yn36xbK9OtNDcRVSBJ9jjeoXftM6CfztsjOAA==
+    dependencies:
+      "@types/json-schema" "^7.0.6"
+      ajv "^6.12.5"
+      ajv-keywords "^3.5.2"
   
   select-hose@^2.0.0:
     version "2.0.0"

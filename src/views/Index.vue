@@ -1,8 +1,7 @@
 <template>
     <div>
-        <h1 class="index-page">Index Page?</h1>
-        <img src="../assets/test.jpg"  alt=""/>
-        <router-link to="/home">To Home</router-link>
+        <h1 class="index-page">this index page</h1>
+        <router-link to="/home">to home</router-link>
     </div>
 </template>
 
@@ -14,7 +13,6 @@
 
 <style scoped>
 .index-page {
-    color: red;
-    transform: translateX(190px);
+    color: blue;
 }
 </style>

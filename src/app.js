@@ -6,7 +6,7 @@ export default () => {
     const router = CreateRouter();
     const app = new Vue({
         router,
-        render: h => h(App)
+        render: h => h(App),
     });
     return { app, router }
 }

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "allowUnreachableCode": true, // 不报告执行不到的代码错误。
     "allowUnusedLabels": false,	// 不报告未使用的标签错误
     "alwaysStrict": false, // 以严格模式解析并为每个源文件生成 "use strict"语句
@@ -10,6 +11,7 @@
     "allowJs": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "server/**/*"
   ]
 }

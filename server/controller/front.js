@@ -10,7 +10,6 @@ const dev = require("../util").isDev();
  * 页面渲染
  */
 exports.renderPage = async function (req, res) {
-
     const output = ClientConf.output.path;
     const templatePath = dev ? path.join(__dirname, "../../index.html") : (output + "/index.html");
     const template = fs.readFileSync(templatePath, "utf-8");

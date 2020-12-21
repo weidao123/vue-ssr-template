@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1 class="title">as Home Page</h1>
-        <router-link to="/">To Index</router-link>
+        <h1 class="title">this home page</h1>
+        <router-link to="/">to index</router-link>
     </div>
 </template>
 
@@ -17,6 +17,5 @@
 <style scoped lang="less">
 .title {
     color: blue;
-    background-color: green;
 }
 </style>
