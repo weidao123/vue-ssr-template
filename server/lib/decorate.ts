@@ -3,6 +3,9 @@ import "reflect-metadata";
 export enum MetaKey {
     CONTROLLER = "CONTROLLER",
     METHOD = "METHOD",
+    METHOD_PARAM = "METHOD_PARAM",
+    REQUEST = "REQUEST",
+    RESPONSE = "RESPONSE",
     SERVICE = "SERVICE",
 }
 
@@ -42,4 +45,35 @@ export function RequestMapping(options: MethodOptions) {
     return function (target: Object, name: string, desc: any) {
         Reflect.defineMetadata(MetaKey.METHOD, options, target[name]);
     }
+}
+
+/**
+ * 参数装饰器
+ * @constructor
+ */
+export function PathVariable(key: string) {
+    return function (target: Object, name: string, index: number) {
+        const metadata = Reflect.getMetadata(MetaKey.METHOD_PARAM, target[name]);
+        let arr = [{ index, key }];
+        if (metadata && Array.isArray(metadata)) {
+            arr = arr.concat(metadata)
+        }
+        Reflect.defineMetadata(MetaKey.METHOD_PARAM, arr, target[name])
+    }
+}
+
+/**
+ * 注入request
+ * @constructor
+ */
+export function Req(target: Object, name: string, index: number) {
+    Reflect.defineMetadata(MetaKey.REQUEST, { index }, target[name]);
+}
+
+/**
+ * 注入response
+ * @constructor
+ */
+export function Res(target: Object, name: string, index: number) {
+    Reflect.defineMetadata(MetaKey.RESPONSE, { index }, target[name]);
 }

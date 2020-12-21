@@ -1,30 +1,20 @@
 Arguments: 
-  E:\node\node.exe E:\yarn\bin\yarn.js add reflect-meta
+  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js install
 
 PATH: 
-  D:\project\vue-ssr-template\node_modules\.bin;E:\xshell\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;E:\JavaSDK\jdk\bin;E:\AndroidSDK\Android\Sdk;E:\deno;E:\node;E:\Git\bin;E:\FlutterSDK\1.7.8\flutter\bin;E:\yarn\bin\;E:\FlutterSDK\1.7.8\flutter\bin\cache\dart-sdk\bin;D:\chrome-driver;E:\python;C:\Users\qi.tian\AppData\Local\Microsoft\WindowsApps;;C:\Users\qi.tian\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\qi.tian\AppData\Local\Yarn\bin
+  /usr/local/sbin:/usr/local/bin:/Users/tian/Libs/flutter/1.2.1/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_261.jdk/Contents/Home/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:.:/Users/tian/Libs/apache-maven-3.6.3/bin
 
 Yarn version: 
   1.22.4
 
 Node version: 
-  12.13.1
+  14.7.0
 
 Platform: 
-  win32 x64
+  darwin x64
 
 Trace: 
-  Error: https://mirrors.tencent.com/npm/reflect-meta: no such package available
-      at Request.params.callback [as _callback] (E:\yarn\lib\cli.js:66096:18)
-      at Request.self.callback (E:\yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:210:5)
-      at Request.<anonymous> (E:\yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:210:5)
-      at IncomingMessage.<anonymous> (E:\yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:299:28)
-      at IncomingMessage.emit (events.js:215:7)
-      at endReadableNT (_stream_readable.js:1184:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: ENOENT: no such file or directory, copyfile '/Users/tian/Library/Caches/Yarn/v6/npm-fill-range-7.0.1-1919a6a7c75fe38b2c7c77e5198535da9acdda40-integrity/node_modules/fill-range/README.md' -> '/Users/tian/WorkSpace/web/vue-ssr-template/node_modules/ts-loader/node_modules/fill-range/README.md'
 
 npm manifest: 
   {
@@ -33,7 +23,7 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "test": "ts-node server/lib/Loader.ts",
+      "test": "ts-node server/lib/main.ts",
       "dev": "cross-env NODE_ENV=development  node server/app.js",
       "start": "node server/app.js ENV=production",
       "build": "npm run build:client && npm run build:server",
@@ -42,11 +32,13 @@ npm manifest:
       "build:server": " cross-env NODE_ENV=production webpack --mode=production --config config/webpack.server.js"
     },
     "dependencies": {
+      "@types/express": "^4.17.9",
       "axios": "^0.19.2",
       "concurrently": "^5.2.0",
       "cross-env": "^7.0.2",
       "express": "^4.17.1",
       "memory-fs": "^0.5.0",
+      "reflect-metadata": "^0.1.13",
       "url-loader": "^4.1.0",
       "vue": "latest",
       "vue-router": "^3.3.4"
@@ -899,6 +891,40 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
     integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
   
+  "@types/body-parser@*":
+    version "1.19.0"
+    resolved "https://mirrors.tencent.com/npm/@types%2fbody-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
+    integrity sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==
+    dependencies:
+      "@types/connect" "*"
+      "@types/node" "*"
+  
+  "@types/connect@*":
+    version "3.4.34"
+    resolved "https://mirrors.tencent.com/npm/@types%2fconnect/-/connect-3.4.34.tgz#170a40223a6d666006d93ca128af2beb1d9b1901"
+    integrity sha512-ePPA/JuI+X0vb+gSWlPKOY0NdNAie/rPUqX2GUPpbZwiKTkSPhjXWuee47E4MtE54QVzGCQMQkAL6JhV2E1+cQ==
+    dependencies:
+      "@types/node" "*"
+  
+  "@types/express-serve-static-core@*":
+    version "4.17.17"
+    resolved "https://mirrors.tencent.com/npm/@types%2fexpress-serve-static-core/-/express-serve-static-core-4.17.17.tgz#6ba02465165b6c9c3d8db3a28def6b16fc9b70f5"
+    integrity sha512-YYlVaCni5dnHc+bLZfY908IG1+x5xuibKZMGv8srKkvtul3wUuanYvpIj9GXXoWkQbaAdR+kgX46IETKUALWNQ==
+    dependencies:
+      "@types/node" "*"
+      "@types/qs" "*"
+      "@types/range-parser" "*"
+  
+  "@types/express@^4.17.9":
+    version "4.17.9"
+    resolved "https://mirrors.tencent.com/npm/@types%2fexpress/-/express-4.17.9.tgz#f5f2df6add703ff28428add52bdec8a1091b0a78"
+    integrity sha512-SDzEIZInC4sivGIFY4Sz1GG6J9UObPwCInYJjko2jzOf/Imx/dlpume6Xxwj1ORL82tBbmN4cPDIDkLbWHk9hw==
+    dependencies:
+      "@types/body-parser" "*"
+      "@types/express-serve-static-core" "*"
+      "@types/qs" "*"
+      "@types/serve-static" "*"
+  
   "@types/glob@^7.1.1":
     version "7.1.3"
     resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
@@ -922,6 +948,11 @@ Lockfile:
     resolved "https://mirrors.tencent.com/npm/@types%2fjson-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
     integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
   
+  "@types/mime@*":
+    version "2.0.3"
+    resolved "https://mirrors.tencent.com/npm/@types%2fmime/-/mime-2.0.3.tgz#c893b73721db73699943bfc3653b1deb7faa4a3a"
+    integrity sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==
+  
   "@types/minimatch@*":
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -936,6 +967,24 @@ Lockfile:
     version "1.5.4"
     resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
     integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
+  
+  "@types/qs@*":
+    version "6.9.5"
+    resolved "https://mirrors.tencent.com/npm/@types%2fqs/-/qs-6.9.5.tgz#434711bdd49eb5ee69d90c1d67c354a9a8ecb18b"
+    integrity sha512-/JHkVHtx/REVG0VVToGRGH2+23hsYLHdyG+GrvoUGlGAd0ErauXDyvHtRI/7H7mzLm+tBCKA7pfcpkQ1lf58iQ==
+  
+  "@types/range-parser@*":
+    version "1.2.3"
+    resolved "https://mirrors.tencent.com/npm/@types%2frange-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
+    integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
+  
+  "@types/serve-static@*":
+    version "1.13.8"
+    resolved "https://mirrors.tencent.com/npm/@types%2fserve-static/-/serve-static-1.13.8.tgz#851129d434433c7082148574ffec263d58309c46"
+    integrity sha512-MoJhSQreaVoL+/hurAZzIm8wafFR6ajiTM1m4A0kv6AGeVBl4r4pOV8bGFrjjq1sGxDTnCoF8i22o0/aE5XCyA==
+    dependencies:
+      "@types/mime" "*"
+      "@types/node" "*"
   
   "@types/source-list-map@*":
     version "0.1.2"
@@ -5275,6 +5324,11 @@ Lockfile:
     integrity sha512-0xe001vZBnJEK+uKcj8qOhyAKPzIT+gStxWr3LCB0DwcXR5NZJ3IaC+yGnHCYzB/S7ov3m3EEbZI2zeNvX+hGQ==
     dependencies:
       picomatch "^2.2.1"
+  
+  reflect-metadata@^0.1.13:
+    version "0.1.13"
+    resolved "https://mirrors.tencent.com/npm/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+    integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
   
   regenerate-unicode-properties@^8.2.0:
     version "8.2.0"

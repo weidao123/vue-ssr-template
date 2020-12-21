@@ -36,10 +36,29 @@ export default class ParserDecorate {
             if (Reflect.hasMetadata(MetaKey.METHOD, target[value])) {
                 const methodOpt = Reflect.getMetadata(MetaKey.METHOD, target[value]) as MethodOptions;
                 const url = path.join(metadata.path, methodOpt.path).replace(/\\/g, "/");
+
+                // 处理path参数
+                const match = url.match(/\/:?\w+/g);
+                const params = {};
+                const not = url.indexOf(":") === -1;
+                let newUrl = url;
+
+                if (match) {
+                    match.forEach((str, index) => {
+                        if (str.startsWith("/:")) {
+                            const name = str.replace("/:", "");
+                            newUrl = newUrl.replace(name, "\\w+").replace(":", "");
+                            params[name] = index;
+                        }
+                    });
+                }
+                const rules = new RegExp("^" + newUrl.replace(/\//g, "\\/") + "$");
                 Container.add(url, {
                     instance: target,
                     func: target[value],
                     method: methodOpt.method,
+                    rules: not ? undefined : rules,
+                    params,
                 });
             }
         });

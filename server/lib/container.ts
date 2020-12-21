@@ -4,6 +4,8 @@ interface ContainerValue {
     instance: Object;
     func: Function;
     method: RequestMethod;
+    rules?: RegExp | undefined;
+    params?: object | undefined;
 }
 
 /**
@@ -20,9 +22,28 @@ class Container {
         this.container.delete(k);
     }
 
-    public get (k: string): ContainerValue {
-        return this.container.get(k);
+    public get (k: string, method: RequestMethod): ContainerValue {
+
+        const value = this.container.get(k);
+        if (value && value.method === method) {
+            return value;
+        }
+
+        const entries = this.container.entries();
+        let next = entries.next();
+        while (!next.done) {
+            const value  = next.value[1] as ContainerValue;
+            if (value
+                && value.method === method
+                && value.rules
+                && value.rules.test(k)) {
+                return value;
+            }
+            next = entries.next();
+        }
+        return null;
     }
+
 }
 
 export default new Container();
