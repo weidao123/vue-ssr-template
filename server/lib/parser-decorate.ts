@@ -36,7 +36,11 @@ export default class ParserDecorate {
             if (Reflect.hasMetadata(MetaKey.METHOD, target[value])) {
                 const methodOpt = Reflect.getMetadata(MetaKey.METHOD, target[value]) as MethodOptions;
                 const url = path.join(metadata.path, methodOpt.path).replace(/\\/g, "/");
-                Container.add(url, { target, method: target[value] });
+                Container.add(url, {
+                    instance: target,
+                    func: target[value],
+                    method: methodOpt.method,
+                });
             }
         });
     }

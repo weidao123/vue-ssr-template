@@ -1,7 +1,9 @@
+import {RequestMethod} from "./decorate";
 
 interface ContainerValue {
-    target: Object;
-    method: Function;
+    instance: Object;
+    func: Function;
+    method: RequestMethod;
 }
 
 /**
