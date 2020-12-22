@@ -1,11 +1,11 @@
-import Application from "./lib";
+import Application from "../lib";
 import config from "./config/config";
 
 const express = require("express");
 const WebpackDevMiddleware = require("webpack-dev-middleware");
 const webpack = require("webpack");
 
-const ClientConf = require("../config/webpack.client");
+const ClientConf = require("../build/webpack.client");
 const isDev = process.env.NODE_ENV === "development";
 
 class App extends Application {

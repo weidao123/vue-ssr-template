@@ -7,7 +7,8 @@ export interface ErrorHandler {
 
 export class Config {
     public port?: number = 8080;
-    public controllerPath?: string = "controller";
+    public controllerDir?: string = "app/controller";
+    public serviceDir?: string = "app/service";
     public ssrTemplate?: string = "index.html";
     public clientOutputDir?: string = "dist";
 

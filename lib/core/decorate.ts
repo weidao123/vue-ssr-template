@@ -9,6 +9,7 @@ export enum MetaKey {
     QUERY = "QUERY",
     BODY = "BODY",
     SERVICE = "SERVICE",
+    INJECT = "INJECT"
 }
 
 export enum RequestMethod {
@@ -28,6 +29,8 @@ export interface MethodOptions {
     path: string;
     method?: RequestMethod;
 }
+
+export type Constructor = { new (...args) }
 
 /**
  * 控制器
@@ -95,4 +98,25 @@ export function Query(target: Object, name: string, index: number) {
  */
 export function Body(target: Object, name: string, index: number) {
     Reflect.defineMetadata(MetaKey.BODY, { index }, target[name]);
+}
+
+/**
+ * 装饰 Service
+ * @constructor
+ */
+export function Service() {
+    return function (target: Constructor) {
+        Reflect.defineMetadata(MetaKey.SERVICE, {}, target);
+    }
+}
+
+/**
+ * 注入服务
+ * @constructor
+ */
+export function Autowrite() {
+    return function (target: Object, name: string) {
+        target[name] = null;
+        Reflect.defineMetadata(MetaKey.INJECT, { target, name }, target, name);
+    }
 }

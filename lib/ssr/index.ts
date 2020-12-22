@@ -1,6 +1,7 @@
 import {Request} from "express";
 import axios from "axios";
-import Application from "..";
+import Application from "../index";
+import Logger from "../util/logger";
 
 const webpack = require("webpack");
 const path = require("path");
@@ -19,12 +20,12 @@ function getServerBundle(ServerConf, callback?) {
         compiler.outputFileSystem = mf;
         compiler.watch({},  (err, status) => {
             if (err) {
-                console.log(err);
+                Logger.error(err);
                 return;
             }
             status = status.toJson();
-            status.errors.forEach((e) => console.log(e));
-            status.warnings.forEach((war) => console.log(war));
+            status.errors.forEach(Logger.error);
+            status.warnings.forEach(Logger.warning);
             const serverBundlePath = path.join(
                 ServerConf.output.path,
                 name

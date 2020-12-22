@@ -4,13 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node server/app.ts",
-    "dev": "cross-env NODE_ENV=development  ts-node server/app.ts",
+    "test": "ts-node app/app.ts",
+    "dev": "cross-env NODE_ENV=development  ts-node app/app.ts",
     "start": "node server/app.js ENV=production",
     "build": "npm run build:client && npm run build:server",
-    "client": "webpack-dev-server --mode development --config config/webpack.client.js",
-    "build:client": "cross-env NODE_ENV=production webpack --mode=production --config config/webpack.client.js",
-    "build:server": " cross-env NODE_ENV=production webpack --mode=production --config config/webpack.server.js"
+    "client": "webpack-dev-server --mode development --config build/webpack.client.js",
+    "build:client": "cross-env NODE_ENV=production webpack --mode=production --config build/webpack.client.js",
+    "build:server": " cross-env NODE_ENV=production webpack --mode=production --config build/webpack.server.js"
   },
   "dependencies": {
     "@types/express": "^4.17.9",

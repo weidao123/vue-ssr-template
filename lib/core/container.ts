@@ -3,7 +3,7 @@ import {RequestMethod} from "./decorate";
 interface ContainerValue {
     instance: Object;
     func: Function;
-    method: RequestMethod;
+    method?: RequestMethod;
     rules?: RegExp | undefined;
     params?: object | undefined;
 }
@@ -57,6 +57,54 @@ class Container {
         return null;
     }
 
+    public findAll(call: (key: string, value: ContainerValue) => boolean | void) {
+        const entries = this.container.entries();
+        let next = entries.next();
+        while (!next.done) {
+            const state = call(next.value[0], next.value[1]);
+            if (!state) {
+                next = entries.next();
+            } else {
+                break;
+            }
+        }
+    }
+
+    public getByType(server: Function) {
+        const entries = this.container.entries();
+        let next = entries.next();
+        while (!next.done) {
+            const value = next.value[1] as ContainerValue;
+            if (value.instance instanceof server) {
+                return value.instance;
+            }
+            next = entries.next();
+        }
+        return null;
+    }
+
+    public getByName(name: string) {
+        let res = null;
+        this.findAll((k, value) => {
+            if (value.instance.constructor.name === name) {
+                res = value.instance;
+                return true;
+            }
+        });
+        return res;
+    }
 }
 
-export default new Container();
+/**
+ * 只暴露操作容器的方法，不直接对外暴露container属性
+ */
+function getContainer() {
+    const box = new Container();
+    const keys = Object.keys((box as any).__proto__);
+    const res = {};
+
+    keys.forEach(k => res[k] = box[k].bind(box));
+    return res;
+}
+
+export default getContainer() as Container;

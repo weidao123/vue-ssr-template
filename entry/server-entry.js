@@ -1,7 +1,7 @@
-import VueAppFactory from "../src/app";
+import VueAppFactory from "../web/app";
 
 /**
- * 服务端的入口 会被server.js 调用
+ * 服务端的入口
  * @param url
  */
 export default function ({ url }) {

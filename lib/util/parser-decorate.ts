@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import {ControllerOptions, MetaKey, MethodOptions} from "../core/decorate";
 import Container from "../core/container";
+import {Logger} from "../index";
 const path = require("path");
 
 type Constructor = { new (...args) }
@@ -16,13 +17,69 @@ export default class ParserDecorate {
         while (!next.done) {
             const fun = next.value[1];
             if (typeof fun === "function") {
-                const hasMetadata = Reflect.hasMetadata(MetaKey.CONTROLLER, fun);
-                if (hasMetadata) {
+                const controller = Reflect.hasMetadata(MetaKey.CONTROLLER, fun);
+                const service = Reflect.hasMetadata(MetaKey.SERVICE, fun);
+                if (controller) {
                     this.parseController(fun);
+                }
+                if (service) {
+                    this.parseService(fun);
                 }
             }
             next = entries.next();
         }
+    }
+
+    /**
+     * 解析Service注入
+     */
+    public static parserAutowrite() {
+        Container.findAll((k, value) => {
+            if (k.startsWith("SERVICE")) {
+                this.inject(value.instance);
+            }
+        })
+    }
+
+    /**
+     * 服务注入
+     * @param target
+     */
+    private static inject(target: Object) {
+        const fields = Reflect.ownKeys((target as any).__proto__);
+        for (const name of fields) {
+            if (typeof target[name] !== "function" && Reflect.hasMetadata(MetaKey.INJECT, target, name as string)) {
+                if (typeof name !== "string") return;
+                const type = Reflect.getMetadata("design:type", target, name);
+                let server = null;
+                if (type && type !== Object) {
+                    // by type
+                    server = Container.getByType(type);
+                } else {
+                    // by name
+                    server = Container.getByName(name);
+                }
+
+                if (!server) {
+                    Logger.error(`inject fail: ${name}, not find server`);
+                } else {
+                    Logger.info(`inject success: ${server.constructor.name}`);
+                    target[name] = server;
+                }
+            }
+        }
+    }
+
+    /**
+     * 将Service注入容器
+     */
+    private static serviceCount = 0;
+    private static parseService(fun: Constructor) {
+        Container.add(`SERVICE_${this.serviceCount}`, {
+            instance: new fun(),
+            func: fun,
+        });
+        this.serviceCount++;
     }
 
     /**
@@ -33,7 +90,10 @@ export default class ParserDecorate {
         const metadata = Reflect.getMetadata(MetaKey.CONTROLLER, fun) as ControllerOptions;
         const target = new fun();
         Reflect.ownKeys(target.__proto__).forEach(value => {
-            if (Reflect.hasMetadata(MetaKey.METHOD, target[value])) {
+            if (
+                typeof target[value] === "function"
+                && Reflect.hasMetadata(MetaKey.METHOD, target[value])
+            ) {
                 const methodOpt = Reflect.getMetadata(MetaKey.METHOD, target[value]) as MethodOptions;
                 const url = path.join(metadata.path, methodOpt.path).replace(/\\/g, "/");
 
@@ -55,6 +115,7 @@ export default class ParserDecorate {
                 // path参数的匹配规则
                 const rules = new RegExp("^" + newUrl.replace(/\//g, "\\/") + "$");
                 const not = url.indexOf(":") === -1;
+
                 Container.add(url, {
                     instance: target,
                     func: target[value],
@@ -64,5 +125,6 @@ export default class ParserDecorate {
                 });
             }
         });
+        this.inject(target);
     }
 }
