@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import {ControllerOptions, MetaKey, MethodOptions} from "./decorate";
-import Container from "./container";
+import {ControllerOptions, MetaKey, MethodOptions} from "../core/decorate";
+import Container from "../core/container";
 const path = require("path");
 
 type Constructor = { new (...args) }
 
 /**
- * 解析装饰器
+ * 解析装饰器到容器里
  */
 export default class ParserDecorate {
 
@@ -37,12 +37,11 @@ export default class ParserDecorate {
                 const methodOpt = Reflect.getMetadata(MetaKey.METHOD, target[value]) as MethodOptions;
                 const url = path.join(metadata.path, methodOpt.path).replace(/\\/g, "/");
 
-                // 处理path参数
-                const match = url.match(/\/:?\w+/g);
+                // 解析path参数key
+                // params: {key: index} key: 参数名称 index: 参数的位置
                 const params = {};
-                const not = url.indexOf(":") === -1;
+                const match = url.match(/\/:?\w+/g);
                 let newUrl = url;
-
                 if (match) {
                     match.forEach((str, index) => {
                         if (str.startsWith("/:")) {
@@ -52,7 +51,10 @@ export default class ParserDecorate {
                         }
                     });
                 }
+
+                // path参数的匹配规则
                 const rules = new RegExp("^" + newUrl.replace(/\//g, "\\/") + "$");
+                const not = url.indexOf(":") === -1;
                 Container.add(url, {
                     instance: target,
                     func: target[value],

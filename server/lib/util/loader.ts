@@ -1,3 +1,5 @@
+import Logger from "./logger";
+
 const fs = require("fs");
 const {resolve} = require("path");
 
@@ -33,9 +35,9 @@ export default class Loader {
 
         const controller = require(path);
         if (!controller.default) {
-            console.warn(`${path} is not load`);
+            Logger.warning(`${path} is not load`);
         } else {
-            console.log(`${path} load`);
+            Logger.info(`${path} load`);
             modules.set(path, controller.default);
         }
         return modules;

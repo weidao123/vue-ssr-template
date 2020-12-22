@@ -6,6 +6,8 @@ export enum MetaKey {
     METHOD_PARAM = "METHOD_PARAM",
     REQUEST = "REQUEST",
     RESPONSE = "RESPONSE",
+    QUERY = "QUERY",
+    BODY = "BODY",
     SERVICE = "SERVICE",
 }
 
@@ -19,7 +21,7 @@ export enum RequestMethod {
 }
 
 export interface ControllerOptions {
-    path: string;
+    path?: string;
 }
 
 export interface MethodOptions {
@@ -30,7 +32,8 @@ export interface MethodOptions {
 /**
  * 控制器
  */
-export function Controller(options: ControllerOptions) {
+export function Controller(options: ControllerOptions = {}) {
+    options.path = options.path || "/";
     return function (target: Function) {
         Reflect.defineMetadata(MetaKey.CONTROLLER, options, target);
     }
@@ -76,4 +79,20 @@ export function Req(target: Object, name: string, index: number) {
  */
 export function Res(target: Object, name: string, index: number) {
     Reflect.defineMetadata(MetaKey.RESPONSE, { index }, target[name]);
+}
+
+/**
+ * 注入query参数
+ * @constructor
+ */
+export function Query(target: Object, name: string, index: number) {
+    Reflect.defineMetadata(MetaKey.QUERY, { index }, target[name]);
+}
+
+/**
+ * 注入body参数
+ * @constructor
+ */
+export function Body(target: Object, name: string, index: number) {
+    Reflect.defineMetadata(MetaKey.BODY, { index }, target[name]);
 }
