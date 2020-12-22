@@ -20,7 +20,7 @@ npm manifest:
   {
     "name": "vue-ssr-template",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "config.ts",
     "license": "MIT",
     "scripts": {
       "test": "ts-node server/lib/main.ts",
