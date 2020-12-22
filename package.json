@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node app/app.ts",
-    "dev": "cross-env NODE_ENV=development  ts-node app/app.ts",
+    "test": "ts-node lib/core/bootstrap.ts",
+    "dev": "cross-env NODE_ENV=development  npm run test",
     "start": "node server/app.js ENV=production",
     "build": "npm run build:client && npm run build:server",
     "client": "webpack-dev-server --mode development --config build/webpack.client.js",

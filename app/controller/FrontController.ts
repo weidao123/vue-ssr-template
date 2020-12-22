@@ -21,4 +21,9 @@ export default class FrontController {
     public async index(@Req req: Request) {
         return await render(req, ServerConf);
     }
+
+    @RequestMapping({path: "/list" })
+    public async list(@Req req: Request) {
+        return this.frontService.getName();
+    }
 }

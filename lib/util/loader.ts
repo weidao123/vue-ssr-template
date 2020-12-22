@@ -9,6 +9,23 @@ const {resolve} = require("path");
 export default class Loader {
 
     /**
+     * 加载指定的文件
+     */
+    public static loadFile(path: string) {
+        if (!fs.existsSync(path) || !fs.statSync(path).isFile()) {
+            return null;
+        }
+        return require(path).default;
+    }
+
+    /**
+     * 检查文件是否存在
+     */
+    public static existFile(path: string) {
+        return fs.existsSync(path) && fs.statSync(path).isFile();
+    }
+
+    /**
      * 加载指定目录的default导出
      * @param path
      */
@@ -35,11 +52,13 @@ export default class Loader {
 
         const controller = require(path);
         if (!controller.default) {
-            Logger.warning(`${path} is not load`);
+            Logger.warning(`NOT LOAD ${path}`);
         } else {
-            Logger.info(`${path} load`);
+            Logger.info(`LOAD -> ${path}`);
             modules.set(path, controller.default);
         }
         return modules;
     }
+
+
 }

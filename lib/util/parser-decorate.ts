@@ -63,7 +63,7 @@ export default class ParserDecorate {
                 if (!server) {
                     Logger.error(`inject fail: ${name}, not find server`);
                 } else {
-                    Logger.info(`inject success: ${server.constructor.name}`);
+                    Logger.info(`inject success: ${server.constructor.name} -> ${target.constructor.name}:${name}`);
                     target[name] = server;
                 }
             }
