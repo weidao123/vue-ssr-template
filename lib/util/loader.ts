@@ -8,6 +8,14 @@ const {resolve} = require("path");
  */
 export default class Loader {
 
+    public static getPathAsExtname(p: string) {
+        if (this.existFile(p + ".ts")) {
+            return p + ".ts";
+        } else {
+            return p + ".js";
+        }
+    }
+
     /**
      * 加载指定的文件
      */
