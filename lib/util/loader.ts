@@ -21,7 +21,7 @@ export default class Loader {
     /**
      * 检查文件是否存在
      */
-    public static existFile(path: string) {
+    public static existFile(path: string): boolean {
         return fs.existsSync(path) && fs.statSync(path).isFile();
     }
 
@@ -29,7 +29,7 @@ export default class Loader {
      * 加载指定目录的default导出
      * @param path
      */
-    public static load(path: string) {
+    public static load(path: string): Map<string, Function> {
         const exist = fs.existsSync(path);
         const modules: Map<string, Function> = new Map<string, Function>();
         if (!exist) {

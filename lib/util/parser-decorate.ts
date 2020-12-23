@@ -48,7 +48,10 @@ export default class ParserDecorate {
     private static inject(target: Object) {
         const fields = Reflect.ownKeys((target as any).__proto__);
         for (const name of fields) {
-            if (typeof target[name] !== "function" && Reflect.hasMetadata(MetaKey.INJECT, target, name as string)) {
+            if (
+                typeof target[name] !== "function" &&
+                Reflect.hasMetadata(MetaKey.INJECT, target, name as string)
+            ) {
                 if (typeof name !== "string") return;
                 const type = Reflect.getMetadata("design:type", target, name);
                 let server = null;
