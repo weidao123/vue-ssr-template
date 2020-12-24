@@ -2,7 +2,6 @@ import Loader from "../util/loader";
 import ParserDecorate from "../util/parser-decorate";
 import {invoke} from "./invoke";
 import Logger from "../util/logger";
-import {Application as ExpressApplication} from "express";
 import {Config, StarterHandler} from "./config";
 
 const bodyParser = require("body-parser");
@@ -21,23 +20,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 export default class Application {
 
     // 全局配置
-    public static config: Config = new Config();
     private readonly starterHandler: StarterHandler;
 
     constructor() {
-        // 加载默认的配置文件
-        const confPath = path.resolve(workDir, Application.config.configFile);
-        const conf = Loader.loadFile(Loader.getPathAsExtname(confPath)) || {};
-        Application.config = Application.config.merge(conf);
+
+        Config.merge();
+        const {serviceDir, controllerDir, starterHandlerFile} = Config.getConfig();
 
         // 加载启动处理器
-        const staterHandlerPath = path.resolve(workDir, Application.config.starterHandlerFile);
+        const staterHandlerPath = path.resolve(workDir, starterHandlerFile);
         const Handle = Loader.loadFile(Loader.getPathAsExtname(staterHandlerPath));
         this.starterHandler = Handle ? new Handle() : null;
 
         // 加载controller ｜ service
-        const service = Loader.load(path.resolve(workDir, Application.config.serviceDir));
-        const controller = Loader.load(path.resolve(workDir, Application.config.controllerDir));
+        const service = Loader.load(path.resolve(workDir, serviceDir));
+        const controller = Loader.load(path.resolve(workDir, controllerDir));
 
         // 解析controller ｜ service
         ParserDecorate.parser(service);
@@ -50,7 +47,7 @@ export default class Application {
             this.starterHandler.before && this.starterHandler.before(app);
         }
         app.all("*", invoke);
-        const port = Application.config.port;
+        const port = Config.getConfig().port;
         app.listen(port, () => Logger.info("application running hare http://127.0.0.1:" + port))
     }
 

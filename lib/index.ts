@@ -9,7 +9,7 @@ export * from "./core/config";
 
 export {
     Logger,
-    Application
+    Application,
 }
 
 export default Application;

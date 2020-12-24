@@ -1,6 +1,6 @@
 import {Request} from "express";
 import axios from "axios";
-import Application from "../index";
+import Application, {Config} from "../index";
 import Logger from "../util/logger";
 
 const webpack = require("webpack");
@@ -38,18 +38,18 @@ function getServerBundle(ServerConf, callback?) {
 }
 
 async function getClientBundle() {
+    const config = Config.getConfig();
     if (!dev) {
-        const config = Application.config;
         const output = path.resolve(process.cwd(), config.clientOutputDir, "vue-ssr-client-manifest.json");
         return require(output);
     }
-    const port = Application.config.port;
+    const port = config.port;
     const { data } = await axios.get(`http://localhost:${port}/vue-ssr-client-manifest.json`);
     return data;
 }
 
 export async function render(req: Request, serverConf) {
-    const config = Application.config;
+    const config = Config.getConfig();
     const templatePath = path.resolve(process.cwd(), config.ssrTemplate);
     const template = fs.readFileSync(templatePath, "utf-8");
     const serverBundle = await getServerBundle(serverConf);
