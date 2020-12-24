@@ -1,4 +1,5 @@
 import {RequestMethod} from "./decorate";
+import PathToRegexp from "path-to-regexp";
 
 interface ContainerValue {
     instance: Object;
@@ -41,17 +42,7 @@ class Container {
                 if (value.rules && value.rules.test(k)) {
                     return value;
                 }
-
-                // 路径模糊匹配
-                const path = next.value[0];
-                if (path.endsWith("/*")) {
-                    const part = path.replace("/*", "");
-                    if (path.startsWith(part)) {
-                        return value;
-                    }
-                }
             }
-
             next = entries.next();
         }
         return null;

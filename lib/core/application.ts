@@ -22,13 +22,9 @@ export default class Application {
 
     // 全局配置
     public static config: Config = new Config();
-    private starterHandler: StarterHandler;
+    private readonly starterHandler: StarterHandler;
 
     constructor() {
-
-    }
-
-    public init() {
         // 加载默认的配置文件
         const confPath = path.resolve(workDir, Application.config.configFile);
         const conf = Loader.loadFile(Loader.getPathAsExtname(confPath)) || {};
@@ -47,17 +43,13 @@ export default class Application {
         ParserDecorate.parser(service);
         ParserDecorate.parser(controller);
         ParserDecorate.parserAutowrite();
-
-        if (this.starterHandler) {
-            this.starterHandler.before && this.starterHandler.before(app);
-        }
-    }
-
-    public link() {
-        app.all("*", invoke);
     }
 
     public listen() {
+        if (this.starterHandler) {
+            this.starterHandler.before && this.starterHandler.before(app);
+        }
+        app.all("*", invoke);
         const port = Application.config.port;
         app.listen(port, () => Logger.info("application running hare http://127.0.0.1:" + port))
     }

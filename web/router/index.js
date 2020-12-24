@@ -8,6 +8,7 @@ Vue.use(VueRouter);
 export default function () {
     const router = new VueRouter({
         mode: "history",
+        base: 'front',
         routes: [{
             path: "/",
             component: Index,

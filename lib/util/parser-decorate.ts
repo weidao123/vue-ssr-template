@@ -1,7 +1,9 @@
 import "reflect-metadata";
-import {ControllerOptions, MetaKey, MethodOptions} from "../core/decorate";
+import {ControllerOptions, MetaKey, MethodOptions} from "..";
 import Container from "../core/container";
 import {Logger} from "../index";
+import {pathToRegexp} from "path-to-regexp";
+
 const path = require("path");
 
 type Constructor = { new (...args) }
@@ -103,27 +105,22 @@ export default class ParserDecorate {
                 // 解析path参数key
                 // params: {key: index} key: 参数名称 index: 参数的位置
                 const params = {};
-                const match = url.match(/\/:?\w+/g);
-                let newUrl = url;
-                if (match) {
-                    match.forEach((str, index) => {
-                        if (str.startsWith("/:")) {
-                            const name = str.replace("/:", "");
-                            newUrl = newUrl.replace(name, "\\w+").replace(":", "");
-                            params[name] = index;
-                        }
-                    });
-                }
-
-                // path参数的匹配规则
-                const rules = new RegExp("^" + newUrl.replace(/\//g, "\\/") + "$");
-                const not = url.indexOf(":") === -1;
-
+                const keys = [];
+                const rules = pathToRegexp(url, keys);
+                const maps =
+                    url.replace('/', '')
+                    .split('/')
+                    .map((item) => item.replace(':', ''));
+                keys.forEach((item) => {
+                    if (item.name) {
+                        params[item.name] = maps.indexOf(item.name);
+                    }
+                });
                 Container.add(url, {
                     instance: target,
                     func: target[value],
                     method: methodOpt.method,
-                    rules: not ? undefined : rules,
+                    rules: rules,
                     params,
                 });
             }

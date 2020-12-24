@@ -9,7 +9,8 @@
     "noImplicitAny": false, // 是否默认禁用 any
     "removeComments": true, // 是否移除注释
     "allowJs": true,
-    "emitDecoratorMetadata": true  // 操作元数据 数据类型 返回类型等
+    "emitDecoratorMetadata": true,  // 操作元数据 数据类型 返回类型等
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "web/**/*",
