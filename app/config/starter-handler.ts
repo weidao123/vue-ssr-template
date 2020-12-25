@@ -1,4 +1,4 @@
-import {StarterHandler} from "../../lib";
+import {StarterHandler} from "summer-boot";
 
 const express = require("express");
 const WebpackDevMiddleware = require("webpack-dev-middleware");

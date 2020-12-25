@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node lib/runtime/bootstrap.ts",
+    "test": "summer-boot",
     "dev": "cross-env NODE_ENV=development  npm run test",
     "start": "node server/app.js ENV=production",
     "build": "npm run build:client && npm run build:server",
@@ -22,6 +22,7 @@
     "memory-fs": "^0.5.0",
     "path-to-regexp": "^6.2.0",
     "reflect-metadata": "^0.1.13",
+    "summer-boot": "^0.1.6",
     "ts-node": "^9.1.1",
     "url-loader": "^4.1.0",
     "vue": "latest",

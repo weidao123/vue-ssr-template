@@ -1,4 +1,4 @@
-import {Autowrite, Service} from "../../lib";
+import {Autowrite, Service} from "summer-boot";
 import FrontService from "./FrontService";
 
 @Service()

@@ -1,4 +1,4 @@
-import {Autowrite, Controller, PathVariable, render, Req, RequestMapping} from "../../lib";
+import {Autowrite, Controller, PathVariable, render, Req, RequestMapping} from "summer-boot";
 import {Request} from "express";
 import FrontService from "../service/FrontService";
 import UserService from "../service/UserService";
