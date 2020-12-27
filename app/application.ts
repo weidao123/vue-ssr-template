@@ -4,14 +4,10 @@ const express = require("express");
 const WebpackDevMiddleware = require("webpack-dev-middleware");
 const webpack = require("webpack");
 
-const ClientConf = require("../../build/webpack.client");
+const ClientConf = require("../build/webpack.client");
 const isDev = process.env.NODE_ENV === "development";
 
-/**
- * 启动处理器
- */
-export default class AppStaterHandler implements StarterHandler {
-
+export default class ApplicationHandler implements StarterHandler {
     public before(app): void {
         // 开发环境编译客户端程序
         if (isDev) {
@@ -21,4 +17,6 @@ export default class AppStaterHandler implements StarterHandler {
         app.use(express.static(ClientConf.output.path));
     }
 
+    public after(app) {
+    }
 }

@@ -5996,10 +5996,10 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-summer-boot@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/summer-boot/-/summer-boot-0.1.6.tgz#7b263791f2e330ecc828c16f87ee6054bb1d0b35"
-  integrity sha512-5LNg5LUMHFYRMICCxc7HcIYVKRTWojfM50EunHj1QuoTHChpjigwBGoY3v+4bk66KUBWqHj6ZP5Gng5D1P210w==
+summer-boot@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/summer-boot/-/summer-boot-0.1.7.tgz#7a1fac75ce5ba0c7e809e46f6462366362f49d93"
+  integrity sha512-LjzjttSIr9K1DXGqiEZiEuHqF+et193NFtfcqIV0ApsIcASPfeFjB7cfkaIXz3pdWyuRejKMdDiENpjBItsZeg==
   dependencies:
     "@types/express" "^4.17.9"
     axios "^0.19.2"
