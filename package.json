@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "test": "summer-boot",
-    "dev": "cross-env NODE_ENV=development  npm run test",
-    "start": "node server/app.js ENV=production",
+    "dev": "summer-bin dev",
+    "start": "summer-bin start",
     "build": "npm run build:client && npm run build:server",
     "client": "webpack-dev-server --mode development --config build/webpack.client.js",
-    "build:client": "cross-env NODE_ENV=production webpack --mode=production --config build/webpack.client.js",
-    "build:server": " cross-env NODE_ENV=production webpack --mode=production --config build/webpack.server.js"
+    "build:client": "webpack --mode=production --config build/webpack.client.js",
+    "build:server": "summer-bin build"
   },
   "dependencies": {
     "@types/express": "^4.17.9",
@@ -22,7 +22,7 @@
     "memory-fs": "^0.5.0",
     "path-to-regexp": "^6.2.0",
     "reflect-metadata": "^0.1.13",
-    "summer-boot": "^0.1.7",
+    "summer-boot": "^0.3.13",
     "ts-node": "^9.1.1",
     "url-loader": "^4.1.0",
     "vue": "latest",

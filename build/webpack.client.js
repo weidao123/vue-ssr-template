@@ -12,7 +12,7 @@ module.exports = merge(BaseConfig, {
         filename: "js/[hash].js",
     },
     devServer: {
-        contentBase: "dist",
+        contentBase: "web_dist",
         port: 8080,
         hot: true,
         headers: {'Access-Control-Allow-Origin': '*'}

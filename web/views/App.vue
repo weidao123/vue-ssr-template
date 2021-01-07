@@ -1,18 +1,23 @@
 <template>
     <div class="container">
-        <h1>Vue SSR Template</h1>
+        <h1>Vue SSR Template APP</h1>
+        <h3>env for {{ env }}</h3>
         <router-view />
     </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                msg: 'hello typescript'
-            }
-        },
+export default {
+    data() {
+        return {
+            msg: 'hello typescript',
+            env: '',
+        }
+    },
+    mounted() {
+        this.env = process.env.NODE_ENV;
     }
+}
 </script>
 
 <style>

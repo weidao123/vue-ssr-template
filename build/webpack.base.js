@@ -13,7 +13,7 @@ function cssLoader () {
 module.exports = {
     mode: "development",
     output: {
-        path: path.join(__dirname, "../dist"),
+        path: path.join(__dirname, "../web_dist"),
         publicPath: "/"
     },
     module: {
